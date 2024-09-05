@@ -16,7 +16,8 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "pug": "^3.0.3"
   },
   "description": ""
 }
