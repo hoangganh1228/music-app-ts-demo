@@ -11,6 +11,8 @@ database.connect();
 const app: Express = express();
 const port: number = 3000;
 
+app.use(express.static("public"));
+
 app.set("views", "./views");
 app.set("view engine", "pug");
 
