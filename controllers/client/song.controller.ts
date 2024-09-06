@@ -78,3 +78,29 @@ export const detail = async (req: Request, res: Response) => {
   });
 
 }
+
+// [GET] /songs/like/:typeLike/:idSong
+export const like = async (req: Request, res: Response) => {
+  const typeLike: String = req.params.typeLike;
+  const idSong: String = req.params.idSong;
+
+  const song = await Song.findOne({
+    _id: idSong,
+    status: "active",
+    deleted: false
+  })
+
+  const newLike = typeLike == "like" ? song.like + 1 : song.like - 1;
+
+  await Song.updateOne({
+    _id: idSong
+  }, {
+    like: newLike
+  })
+
+  res.json({
+    code: 200,
+    message: "Thanh cong!",
+    like: newLike
+  })
+}
