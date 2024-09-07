@@ -6,10 +6,13 @@ import { convertToSlug } from "../../helpers/convertToSlug";
 // import { convertToSlug } from "../../helpers/convertToSlug";
 
 
-// [GET] /search/result
+// [GET] /search/:type
 export const result = async (req: Request, res: Response) => {
   const keyword: string = `${req.query.keyword}`;
   
+  const type: string =  `${req.params.type}`
+
+
   let newSongs = [];
 
   if(keyword) {
@@ -34,14 +37,40 @@ export const result = async (req: Request, res: Response) => {
         const infoSinger = await Singer.findOne({
           _id: song.singerId,
         })
-        song["infoSinger"] = infoSinger
+        
+        newSongs.push({
+          id: song.id,
+          title: song.title,
+          avatar: song.avatar,
+          slug: song.slug,
+          like: song.like,
+          infoSinger: {
+            fullName: infoSinger.fullName
+          }
+        })
       }
-      newSongs = songs
     }
   }
-  res.render("client/pages/search/result", {
-    pageTitle: `Kết quả: ${keyword}`,
-    keyword: keyword,
-    songs: newSongs
-  });
+  switch (type) {
+    case "result":
+      res.render("client/pages/search/result", {
+        pageTitle: `Kết quả: ${keyword}`,
+        keyword: keyword,
+        songs: newSongs
+      });
+      break;
+    case "suggest":
+      res.json({
+        code: 200,
+        message: "Thành công!",
+        songs: newSongs
+      })
+      break;
+    default:
+      res.json({
+        code: 400,
+        message: "Lỗi!"
+      });
+      break;
+  }
 }
