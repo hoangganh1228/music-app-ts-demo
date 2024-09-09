@@ -8,6 +8,7 @@ import adminRoutes from "./routes/admin/index.route"
 import { systemConfig } from "./config/config";
 import path from "path";
 import bodyParser from "body-parser";
+import methodOverride from "method-override";
 dotenv.config();
 
 database.connect();
@@ -18,7 +19,7 @@ const port: number = 3000;
 app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(methodOverride("_method"));
 app.set("views", "./views");
 app.set("view engine", "pug");
 

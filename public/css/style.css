@@ -305,11 +305,13 @@
   color: #F57F20;
   padding: 10px 15px;
   border-bottom: 1px solid #ddd;
+  
 }
 
 .singer-detail .inner-desc .inner-text {
   font-size: 14px;
   padding: 10px 15px;
+  white-space: pre;
 }
 /* End singer-detail */
 
